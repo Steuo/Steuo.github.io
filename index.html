@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steno | IMG</title>
+<meta name="description" content="Drop an image to compress it, entirely in your browser. Nothing is uploaded.">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/webp" href="assets/logo.webp">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="corner-link" href="pdf/">PDF Compressor</a>
+
+<input type="file" id="fileInput" accept="image/*,.jpg,.jpeg,.png,.apng,.gif,.webp,.avif,.svg,.ico,.bmp,.heic,.heif,.jxl,.dng,.cr2,.cr3,.nef,.arw,.raf,.orf,.rw2,.pef" multiple hidden>
+
+<main class="stage" id="stage">
+
+  <div class="empty-state" id="emptyState" role="button" tabindex="0" aria-label="Choose images to compress">
+    <img class="logo" src="assets/logo.svg" alt="Steno" draggable="false">
+    <p class="hint">Drop an IMG, or click to browse</p>
+  </div>
+
+  <div class="workspace" id="toolPanel" hidden>
+
+    <section class="preview-col" aria-label="Previews and results">
+      <div class="preview-top">
+        <div class="queue-row">
+          <span class="queue-info" id="queueInfo"></span>
+          <button class="link-btn" id="addMoreBtn" type="button">+ Add more</button>
+        </div>
+        <div class="queue-note" id="queueNote" role="status" aria-live="polite"></div>
+      </div>
+      <div class="preview-grid" id="previewGrid"></div>
+    </section>
+
+    <aside class="dock-col">
+      <div class="dock">
+        <div class="panel-head">
+          <img class="logo-small" src="assets/logo.svg" alt="Steno" draggable="false">
+          <button class="reset-btn" id="resetBtn" type="button" title="Start over" aria-label="Start over">&times;</button>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="quality"><span>Quality</span><span class="val" id="qualityVal">75</span></label>
+          <input type="range" id="quality" min="10" max="100" value="75">
+          <p class="field-hint">Applies to JPG and WEBP. PNG is lossless.</p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="targetSize"><span>Target size</span><span class="val" id="targetVal">Original</span></label>
+          <input type="range" id="targetSize" min="1" max="100" step="1" value="100">
+          <p class="field-hint">Starts at the original size. Drag left to aim smaller. JPG and WEBP only: it keeps the highest quality that fits, and shrinks the image only if it must.</p>
+        </div>
+
+        <button class="advanced-toggle" id="advancedToggle" type="button">Advanced settings</button>
+        <div class="advanced-fields" id="advancedFields" hidden>
+          <div class="field" id="formatField">
+            <label class="field-label" for="format"><span>Output format</span></label>
+            <select id="format">
+              <option value="image/jpeg">JPG</option>
+              <option value="image/webp">WEBP</option>
+              <option value="image/png">PNG (lossless)</option>
+              <option value="image/x-icon">ICO (up to 256 px)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="maxDim"><span>Resize (longest side, px)</span></label>
+            <input type="number" id="maxDim" min="1" step="1" inputmode="numeric" placeholder="e.g. 1920 (blank = keep size)">
+          </div>
+        </div>
+
+        <div class="live-total" id="liveTotal" hidden>
+          <div class="live-head"><span>Live result</span><span class="live-state" id="liveState"></span></div>
+          <div class="live-sizes"><span id="liveSizes"></span><span class="live-pct" id="livePct"></span></div>
+          <div class="file-bar"><div class="file-bar-fill" id="liveBar"></div></div>
+          <p class="field-hint">Drag the divider to compare. Scroll or pinch to zoom, drag to pan, double-click to reset. The size updates as you change settings.</p>
+        </div>
+
+        <button class="btn" id="downloadAllBtn" type="button" hidden>Download</button>
+
+        <div class="processing-note"><span class="led"></span> processed locally — nothing leaves this tab</div>
+      </div>
+    </aside>
+
+  </div>
+
+</main>
+
+<noscript><p class="noscript">Steno needs JavaScript to work.</p></noscript>
+<script src="js/common.js"></script>
+<script src="js/formats.js"></script>
+<script src="js/image.js"></script>
+</body>
+</html>

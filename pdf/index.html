@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steno | PDF</title>
+<meta name="description" content="Drop a PDF to compress it, entirely in your browser. Nothing is uploaded.">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/webp" href="../assets/logo.webp">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<a class="corner-link" href="../">IMG Compressor</a>
+
+<input type="file" id="fileInput" accept="application/pdf" multiple hidden>
+
+<main class="stage" id="stage">
+
+  <div class="empty-state" id="emptyState" role="button" tabindex="0" aria-label="Choose PDFs to compress">
+    <img class="logo" src="../assets/logo.svg" alt="Steno" draggable="false">
+    <p class="hint">Drop a PDF, or click to browse</p>
+  </div>
+
+  <div class="tool-panel" id="toolPanel" hidden>
+    <div class="panel-head">
+      <img class="logo-small" src="../assets/logo.svg" alt="Steno" draggable="false">
+      <button class="reset-btn" id="resetBtn" type="button" title="Start over" aria-label="Start over">&times;</button>
+    </div>
+
+    <div class="queue-row">
+      <span class="queue-info" id="queueInfo"></span>
+      <button class="link-btn" id="addMoreBtn" type="button">+ Add more</button>
+    </div>
+    <div class="queue-note" id="queueNote" role="status" aria-live="polite"></div>
+
+    <div class="field">
+      <label class="field-label" for="quality"><span>Image quality</span><span class="val" id="qualityVal">70</span></label>
+      <input type="range" id="quality" min="20" max="95" value="70">
+    </div>
+    <div class="warn-box">Recompresses embedded JPEG images in place. Text and vector content stay untouched and selectable. If nothing can be shrunk, your original file is returned unchanged.</div>
+
+    <button class="advanced-toggle" id="advancedToggle" type="button">Advanced settings</button>
+    <div class="advanced-fields" id="advancedFields" hidden>
+      <div class="field">
+        <label class="field-label" for="maxDim"><span>Max image size (longest edge)</span></label>
+        <select id="maxDim">
+          <option value="800">800 px — web / screen only</option>
+          <option value="1200">1200 px — smaller file</option>
+          <option value="1600" selected>1600 px — balanced</option>
+          <option value="2400">2400 px — print quality</option>
+          <option value="0">Don't resize, quality only</option>
+        </select>
+      </div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="scannedMode">
+        This is a scanned document — rasterize pages instead (text becomes non-selectable)
+      </label>
+    </div>
+
+    <button class="btn" id="compressBtn" type="button">Compress</button>
+    <button class="btn btn-ghost btn-tight" id="downloadAllBtn" type="button" hidden>Download all (.zip)</button>
+
+    <div class="results" id="panel" aria-live="polite">
+      <div class="panel-empty" id="panelEmpty">Results will appear here.</div>
+    </div>
+
+    <div class="processing-note"><span class="led"></span> processed locally — nothing leaves this tab</div>
+  </div>
+
+</main>
+
+<noscript><p class="noscript">Steno needs JavaScript to work.</p></noscript>
+<script src="../js/common.js"></script>
+<script src="../js/pdf.js"></script>
+</body>
+</html>
